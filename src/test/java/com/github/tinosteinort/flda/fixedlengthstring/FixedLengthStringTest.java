@@ -1,0 +1,34 @@
+package com.github.tinosteinort.flda.fixedlengthstring;
+
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
+
+public class FixedLengthStringTest {
+
+    @Test public void testEquals() {
+        assertEquals(new FixedLengthString("   "), new FixedLengthString("   "));
+    }
+
+    @Test public void testEqualsDifferentInitialised() {
+        assertEquals(new FixedLengthString("###"), new FixedLengthString(3, '#'));
+    }
+
+    @Test public void update() {
+        final FixedLengthString data = new FixedLengthString(5, ' ');
+        data.update(0, "-----");
+        assertEquals("-----", data.toString());
+    }
+
+    @Test public void updateMiddle() {
+        final FixedLengthString data = new FixedLengthString(5, ' ');
+        data.update(1, "--");
+        assertEquals(" --  ", data.toString());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void updateTooLong() {
+        final FixedLengthString data = new FixedLengthString(5, ' ');
+        data.update(0, "123456");
+    }
+}
