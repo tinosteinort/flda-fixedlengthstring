@@ -46,11 +46,11 @@ public class FixedLengthStringInterfaceTest {
 
         final Person person = new Person();
 
-        final PersonFixedLengthStringReader reader = new PersonFixedLengthStringReader(config, new FixedLengthString(data));
+        final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor = new ReadAccessor<>(config, new FixedLengthString(data));
 
-        person.setFirstname(reader.firstname());
-        person.setLastname(reader.lastname());
-        person.setAge(reader.age());
+        person.setFirstname(readAccessor.read(PersonDescriptor.FIRST_NAME));
+        person.setLastname(readAccessor.read(PersonDescriptor.LAST_NAME));
+        person.setAge(readAccessor.read(PersonDescriptor.AGE));
 
         return person;
     }
@@ -71,11 +71,11 @@ public class FixedLengthStringInterfaceTest {
 
         final FixedLengthString row = config.createNewRecord();
 
-        final PersonFixedLengthStringWriter writer = new PersonFixedLengthStringWriter(config, row);
+        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = new WriteAccessor<>(config, row);
 
-        writer.firstname(person.getFirstname());
-        writer.lastname(person.getLastname());
-        writer.age(person.getAge());
+        writer.write(PersonDescriptor.FIRST_NAME, person.getFirstname());
+        writer.write(PersonDescriptor.LAST_NAME, person.getLastname());
+        writer.write(PersonDescriptor.AGE, person.getAge());
 
         return row;
     }
@@ -83,20 +83,19 @@ public class FixedLengthStringInterfaceTest {
     @Test public void testImportCustomAttribute() {
 
         final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
-                // not needed, because trim() removes spaces from left and right:
-                // .registerReader(PersonDescriptor.AGE, new RightAlignedIntegerAttributeReader())
+                .registerReader(PersonDescriptor.AGE, new AgeDecrementIntegerWriter(1)) // override default behaviour for special attribute
                 .build();
 
         // Age is right aligned, custom AttributeReader required for reading
-        final String dataFromFile = "Tick      Duck        7";
+        final String dataFromFile = "Tick      Duck        8";
 
         final Person person = new Person();
 
-        final PersonFixedLengthStringReader reader = new PersonFixedLengthStringReader(localConfig, new FixedLengthString(dataFromFile));
+       final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor = new ReadAccessor<>(localConfig, new FixedLengthString(dataFromFile));
 
-        person.setFirstname(reader.firstname());
-        person.setLastname(reader.lastname());
-        person.setAge(reader.age());
+        person.setFirstname(readAccessor.read(PersonDescriptor.FIRST_NAME));
+        person.setLastname(readAccessor.read(PersonDescriptor.LAST_NAME));
+        person.setAge(readAccessor.read(PersonDescriptor.AGE));
 
         Assert.assertEquals("Tick", person.getFirstname());
         Assert.assertEquals("Duck", person.getLastname());
@@ -106,21 +105,21 @@ public class FixedLengthStringInterfaceTest {
     @Test public void testExportCustomAttribute() {
 
         final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
-                .registerWriter(PersonDescriptor.AGE, new AgeIncrementIntegerWriter(2)) // override default behaviour for special Attribute
+                .registerWriter(PersonDescriptor.AGE, new AgeIncrementIntegerWriter(2)) // override default behaviour for special attribute
                 .build();
 
         final Person person = new Person();
         person.setFirstname("Tick");
         person.setLastname("Duck");
-        person.setAge(7); // Age should be right aligned, custom AttributeWriter required for writing
+        person.setAge(7); // Age should be right aligned, see definition in PersonDescriptor
 
         final FixedLengthString row = localConfig.createNewRecord();
 
-        final PersonFixedLengthStringWriter writer = new PersonFixedLengthStringWriter(localConfig, row);
+        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = new WriteAccessor<>(localConfig, row);
 
-        writer.firstname(person.getFirstname());
-        writer.lastname(person.getLastname());
-        writer.age(person.getAge());
+        writer.write(PersonDescriptor.FIRST_NAME, person.getFirstname());
+        writer.write(PersonDescriptor.LAST_NAME, person.getLastname());
+        writer.write(PersonDescriptor.AGE, person.getAge());
 
         Assert.assertEquals(
                 new FixedLengthString("Tick      Duck        9"),
@@ -157,5 +156,19 @@ class AgeIncrementIntegerWriter extends IntegerAttributeWriter {
     @Override protected String nullSafeConvertToString(final Integer value) {
         final Integer newValue = (value == null ? 0 : value) + yearsToIncrement;
         return String.valueOf(newValue);
+    }
+}
+
+class AgeDecrementIntegerWriter extends IntegerAttributeReader {
+
+    private final int yearsToDecrement;
+
+    public AgeDecrementIntegerWriter(final int yearsToDecrement) {
+        this.yearsToDecrement = yearsToDecrement;
+    }
+
+    @Override public Integer read(final FixedLengthString data, final FixedLengthStringAttribute<Integer> attribute) {
+        final Integer value = super.read(data, attribute);
+        return (value == null ? 0 : (value - yearsToDecrement));
     }
 }
