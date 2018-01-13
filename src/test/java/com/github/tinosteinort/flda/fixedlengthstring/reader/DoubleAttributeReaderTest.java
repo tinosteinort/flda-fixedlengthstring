@@ -38,12 +38,4 @@ public class DoubleAttributeReaderTest {
 
         assertNull(reader.read(data, attribute));
     }
-
-    @Test(expected = NumberFormatException.class)
-    public void valueOutOfBounds() {
-        final FixedLengthString data = new FixedLengthString("1.7976931348623157e+309");
-        final FixedLengthStringAttribute<Double> attribute = new FixedLengthStringAttribute<>(Double.class, 0, 19);
-
-        reader.read(data, attribute);
-    }
 }
