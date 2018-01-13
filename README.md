@@ -22,7 +22,7 @@ A `FixedLengthString` is a mutable String. The value can be changed, but not the
 `FLDA - FixedLenghtString` reads and writes a FixedLengthString with the definition of the attributes. Too short values
  are filled up with a definable Character and values which are too long will be cut.
 
-See [FixedLengthStringInterfaceTest](src\test\java\com\github\tinosteinort\flda\fixedlengthstring\fullexample\FixedLengthStringInterfaceTest.java)
+See [FixedLengthStringInterfaceTest](src/test/java/com/github/tinosteinort/flda/fixedlengthstring/fullexample/FixedLengthStringInterfaceTest.java)
  for a full working example with:
 * Length Validator
 * RecordFactory
