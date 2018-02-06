@@ -4,6 +4,7 @@ import com.github.tinosteinort.flda.accessor.AccessorConfig;
 import com.github.tinosteinort.flda.accessor.AccessorConfigBuilder;
 import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
 import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
+import com.github.tinosteinort.flda.fixedlengthstring.DefaultFixedLengthStringAccessorConfigBuilder;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthString;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAttribute;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringFactory;
@@ -21,11 +22,7 @@ public class FixedLengthStringInterfaceTest {
 
     private final LengthValidator validator = new LengthValidator(PersonDescriptor.LENGTH);
 
-    private final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config = new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>()
-            .registerReader(String.class, new StringAttributeReader())
-            .registerReader(Integer.class, new IntegerAttributeReader())
-            .registerWriter(String.class, new StringAttributeWriter())
-            .registerWriter(Integer.class, new IntegerAttributeWriter())
+    private final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config = new DefaultFixedLengthStringAccessorConfigBuilder()
             .withRecordFactory(new FixedLengthStringFactory(PersonDescriptor.LENGTH, ' '))
             .withReadValidator(validator)
             .withWriteValidator(validator)
