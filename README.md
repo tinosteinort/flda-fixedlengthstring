@@ -26,5 +26,15 @@ See [FixedLengthStringInterfaceTest](src/test/java/com/github/tinosteinort/flda/
  for a full working example with:
 * Length Validator
 * RecordFactory
-* Reading / writing of types: String, Integer
+* Build in reading / writing of types:
+  * String
+  * Enum
+  * Byte
+  * Short
+  * Integer
+  * Long
+  * Float
+  * Double
+  * BigInteger
+  * BigDecimal
 * extending a config and overwrite behavior for an attribute
