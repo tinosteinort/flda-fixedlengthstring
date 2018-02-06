@@ -64,4 +64,26 @@ public class FixedLengthStringAttribute<T> implements Attribute<T> {
                 ", filler=" + filler +
                 '}';
     }
+
+    @Override public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FixedLengthStringAttribute<?> that = (FixedLengthStringAttribute<?>) o;
+
+        if (index != that.index) return false;
+        if (length != that.length) return false;
+        if (filler != that.filler) return false;
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        return alignment == that.alignment;
+    }
+
+    @Override public int hashCode() {
+        int result = type != null ? type.hashCode() : 0;
+        result = 31 * result + index;
+        result = 31 * result + length;
+        result = 31 * result + (alignment != null ? alignment.hashCode() : 0);
+        result = 31 * result + (int) filler;
+        return result;
+    }
 }
