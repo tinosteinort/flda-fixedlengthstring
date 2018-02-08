@@ -19,7 +19,7 @@ A `FixedLengthString` is a mutable String. The value can be changed, but not the
 1. `FixedLengthString fls = new FixedLengthString("some value");` creates a new FixedLengthString with 10 chars and a value of "some value".
 2. `FixedLengthString fls = new FixedLengthString(10, '_');` creates a new FixedLengthString with 10 chars and a value of "__________"
 
-`FLDA - FixedLenghtString` reads and writes a FixedLengthString with the definition of the attributes. Too short values
+`flda-fixedlengthstring` reads and writes a FixedLengthString with the definition of the attributes. Too short values
  are filled up with a definable Character and values which are too long will be cut.
 
 See [FixedLengthStringInterfaceTest](src/test/java/com/github/tinosteinort/flda/fixedlengthstring/fullexample/FixedLengthStringInterfaceTest.java)
