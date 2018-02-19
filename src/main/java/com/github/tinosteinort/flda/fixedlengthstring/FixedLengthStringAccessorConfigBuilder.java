@@ -160,13 +160,13 @@ public class FixedLengthStringAccessorConfigBuilder
 
             @Override
             public <ATTR_TYPE> AttributeReader<FixedLengthString, ATTR_TYPE, FixedLengthStringAttribute<?>> readerFor(
-                    FixedLengthStringAttribute<?> attribute) {
+                    final FixedLengthStringAttribute<?> attribute) {
                 return innerConfig.readerFor(attribute);
             }
 
             @Override
             public <ATTR_TYPE> AttributeWriter<FixedLengthString, ATTR_TYPE, FixedLengthStringAttribute<?>> writerFor(
-                    FixedLengthStringAttribute<?> attribute) {
+                    final FixedLengthStringAttribute<?> attribute) {
                 return innerConfig.writerFor(attribute);
             }
 
