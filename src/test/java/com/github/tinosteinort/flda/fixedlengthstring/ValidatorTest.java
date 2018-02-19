@@ -1,7 +1,5 @@
 package com.github.tinosteinort.flda.fixedlengthstring;
 
-import com.github.tinosteinort.flda.accessor.AccessorConfig;
-import com.github.tinosteinort.flda.accessor.AccessorConfigBuilder;
 import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
 import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
 import org.junit.Test;
@@ -14,8 +12,7 @@ public class ValidatorTest {
     private final LengthValidator readValidator = new LengthValidator(5);
     private final LengthValidator writeValidator = new LengthValidator(5);
 
-    private final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config =
-            new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>()
+    private final FixedLengthStringAccessorConfig config = new FixedLengthStringAccessorConfigBuilder()
                     .withReadValidator(readValidator)
                     .withWriteValidator(writeValidator)
                     .build();
@@ -47,8 +44,7 @@ public class ValidatorTest {
     }
 
     @Test public void nullValidators() {
-        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config =
-                new AccessorConfigBuilder<FixedLengthString, FixedLengthStringAttribute<?>>()
+        final FixedLengthStringAccessorConfig config = new FixedLengthStringAccessorConfigBuilder()
                         .withReadValidator(null)
                         .withWriteValidator(null)
                         .build();

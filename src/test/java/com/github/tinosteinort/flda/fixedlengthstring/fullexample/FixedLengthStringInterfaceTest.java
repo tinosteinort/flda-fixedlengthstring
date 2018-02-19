@@ -1,11 +1,10 @@
 package com.github.tinosteinort.flda.fixedlengthstring.fullexample;
 
-import com.github.tinosteinort.flda.accessor.AccessorConfig;
-import com.github.tinosteinort.flda.accessor.AccessorConfigBuilder;
 import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
 import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
-import com.github.tinosteinort.flda.fixedlengthstring.DefaultFixedLengthStringAccessorConfigBuilder;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthString;
+import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAccessorConfig;
+import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAccessorConfigBuilder;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAttribute;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringFactory;
 import com.github.tinosteinort.flda.fixedlengthstring.LengthValidator;
@@ -22,7 +21,9 @@ public class FixedLengthStringInterfaceTest {
 
     private final LengthValidator validator = new LengthValidator(PersonDescriptor.LENGTH);
 
-    private final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> config = new DefaultFixedLengthStringAccessorConfigBuilder()
+    private final FixedLengthStringAccessorConfig config = new FixedLengthStringAccessorConfigBuilder()
+            .withDefaultReaders()
+            .withDefaultWriters()
             .withRecordFactory(new FixedLengthStringFactory(PersonDescriptor.LENGTH, ' '))
             .withReadValidator(validator)
             .withWriteValidator(validator)
@@ -79,11 +80,11 @@ public class FixedLengthStringInterfaceTest {
 
     @Test public void testImportCustomAttribute() {
 
-        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
-                .registerReader(PersonDescriptor.AGE, new AgeDecrementIntegerWriter(1)) // override default behaviour for special attribute
+        final FixedLengthStringAccessorConfig localConfig = new FixedLengthStringAccessorConfigBuilder(config)
+                // override default behaviour for special attribute:
+                .registerReader(PersonDescriptor.AGE, new AgeDecrementIntegerWriter(1))
                 .build();
 
-        // Age is right aligned, custom AttributeReader required for reading
         final String dataFromFile = "Tick      Duck        8";
 
         final Person person = new Person();
@@ -101,8 +102,9 @@ public class FixedLengthStringInterfaceTest {
 
     @Test public void testExportCustomAttribute() {
 
-        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
-                .registerWriter(PersonDescriptor.AGE, new AgeIncrementIntegerWriter(2)) // override default behaviour for special attribute
+        final FixedLengthStringAccessorConfig localConfig = new FixedLengthStringAccessorConfigBuilder(config)
+                // override default behaviour for special attribute
+                .registerWriter(PersonDescriptor.AGE, new AgeIncrementIntegerWriter(2))
                 .build();
 
         final Person person = new Person();
@@ -125,7 +127,7 @@ public class FixedLengthStringInterfaceTest {
 
     @Test public void genericParameterTest() {
 
-        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> localConfig = new AccessorConfigBuilder<>(config)
+        final FixedLengthStringAccessorConfig localConfig = new FixedLengthStringAccessorConfigBuilder(config)
                 .registerReader(String.class, new StringAttributeReader())
                 .registerReader(Integer.class, new IntegerAttributeReader())
                 .registerWriter(String.class, new StringAttributeWriter())
