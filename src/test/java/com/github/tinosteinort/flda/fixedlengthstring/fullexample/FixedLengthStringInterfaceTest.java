@@ -44,7 +44,8 @@ public class FixedLengthStringInterfaceTest {
 
         final Person person = new Person();
 
-        final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor = new ReadAccessor<>(config, new FixedLengthString(data));
+        final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor =
+                config.newReadAccessor(new FixedLengthString(data));
 
         person.setFirstname(readAccessor.read(PersonDescriptor.FIRST_NAME));
         person.setLastname(readAccessor.read(PersonDescriptor.LAST_NAME));
@@ -69,7 +70,7 @@ public class FixedLengthStringInterfaceTest {
 
         final FixedLengthString row = config.createNewRecord();
 
-        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = new WriteAccessor<>(config, row);
+        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = config.newWriteAccessor(row);
 
         writer.write(PersonDescriptor.FIRST_NAME, person.getFirstname());
         writer.write(PersonDescriptor.LAST_NAME, person.getLastname());
@@ -89,7 +90,8 @@ public class FixedLengthStringInterfaceTest {
 
         final Person person = new Person();
 
-       final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor = new ReadAccessor<>(localConfig, new FixedLengthString(dataFromFile));
+       final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor =
+               localConfig.newReadAccessor(new FixedLengthString(dataFromFile));
 
         person.setFirstname(readAccessor.read(PersonDescriptor.FIRST_NAME));
         person.setLastname(readAccessor.read(PersonDescriptor.LAST_NAME));
@@ -114,7 +116,8 @@ public class FixedLengthStringInterfaceTest {
 
         final FixedLengthString row = localConfig.createNewRecord();
 
-        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = new WriteAccessor<>(localConfig, row);
+        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer =
+                localConfig.newWriteAccessor(row);
 
         writer.write(PersonDescriptor.FIRST_NAME, person.getFirstname());
         writer.write(PersonDescriptor.LAST_NAME, person.getLastname());
@@ -136,8 +139,10 @@ public class FixedLengthStringInterfaceTest {
 
         final String data = "Tick      Duck        7";
 
-        final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> reader = new ReadAccessor<>(localConfig, new FixedLengthString(data));
-        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer = new WriteAccessor<>(localConfig, new FixedLengthString(data));
+        final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> reader =
+                localConfig.newReadAccessor(new FixedLengthString(data));
+        final WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> writer =
+                localConfig.newWriteAccessor(new FixedLengthString(data));
         // This two Lines of Code does not compile properly if everything works fine
 //        final String age = reader.read(PersonDescriptor.AGE);
 //        writer.write(PersonDescriptor.AGE, "123");

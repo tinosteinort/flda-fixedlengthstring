@@ -3,6 +3,10 @@ package com.github.tinosteinort.flda.fixedlengthstring;
 import java.util.Arrays;
 import java.util.Objects;
 
+/**
+ * A {@link String} with a fix size. The value of a {@code FixedLengthString} can be edited, but it is
+ *  not possible to resize an instance of {@code FixedLengthString}.
+ */
 public class FixedLengthString implements CharSequence {
 
     private final char[] value;

@@ -5,7 +5,9 @@ import com.github.tinosteinort.flda.accessor.AccessorConfigBuilder;
 import com.github.tinosteinort.flda.accessor.Attribute;
 import com.github.tinosteinort.flda.accessor.RecordValidator;
 import com.github.tinosteinort.flda.accessor.reader.AttributeReader;
+import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
 import com.github.tinosteinort.flda.accessor.writer.AttributeWriter;
+import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
 import com.github.tinosteinort.flda.fixedlengthstring.reader.BigDecimalAttributeReader;
 import com.github.tinosteinort.flda.fixedlengthstring.reader.BigIntegerAttributeReader;
 import com.github.tinosteinort.flda.fixedlengthstring.reader.ByteAttributeReader;
@@ -200,6 +202,16 @@ public class FixedLengthStringAccessorConfigBuilder
 
             @Override public RecordValidator<FixedLengthString> writeValidator() {
                 return innerConfig.writeValidator();
+            }
+
+            @Override public ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> newReadAccessor(
+                    final FixedLengthString record) {
+                return new ReadAccessor<>(this, record);
+            }
+
+            @Override public WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> newWriteAccessor(
+                    final FixedLengthString record) {
+                return new WriteAccessor<>(this, record);
             }
         };
     }
