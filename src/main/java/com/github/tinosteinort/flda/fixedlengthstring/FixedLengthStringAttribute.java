@@ -2,6 +2,8 @@ package com.github.tinosteinort.flda.fixedlengthstring;
 
 import com.github.tinosteinort.flda.accessor.Attribute;
 
+import java.util.Objects;
+
 public class FixedLengthStringAttribute<T> implements Attribute<T> {
 
     public static final Alignment DEFAULT_ALIGNMENT = Alignment.LEFT;
@@ -28,10 +30,10 @@ public class FixedLengthStringAttribute<T> implements Attribute<T> {
 
     public FixedLengthStringAttribute(final Class<T> type, final int index, final int length, final Alignment alignment,
                                       final char filler) {
-        this.type = type;
+        this.type = Objects.requireNonNull(type, "type must not be NULL");
         this.index = index;
         this.length = length;
-        this.alignment = alignment;
+        this.alignment = Objects.requireNonNull(alignment, "alignment must not be NULL");
         this.filler = filler;
     }
 
