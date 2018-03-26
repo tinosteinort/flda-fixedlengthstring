@@ -1,7 +1,7 @@
 package com.github.tinosteinort.flda.fixedlengthstring.fullexample;
 
-import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
-import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
+import com.github.tinosteinort.flda.accessor.ReadAccessor;
+import com.github.tinosteinort.flda.accessor.WriteAccessor;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthString;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAccessorConfig;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAccessorConfigBuilder;

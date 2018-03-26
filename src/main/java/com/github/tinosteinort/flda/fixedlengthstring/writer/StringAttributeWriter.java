@@ -1,6 +1,6 @@
 package com.github.tinosteinort.flda.fixedlengthstring.writer;
 
-import com.github.tinosteinort.flda.accessor.writer.AttributeWriter;
+import com.github.tinosteinort.flda.accessor.AttributeWriter;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthString;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAttribute;
 import com.github.tinosteinort.flda.fixedlengthstring.StringUtils;

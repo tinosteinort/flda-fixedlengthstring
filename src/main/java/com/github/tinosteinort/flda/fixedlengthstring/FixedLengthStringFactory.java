@@ -1,15 +1,14 @@
 package com.github.tinosteinort.flda.fixedlengthstring;
 
 import com.github.tinosteinort.flda.accessor.AccessorConfig;
-
-import java.util.function.Supplier;
+import com.github.tinosteinort.flda.accessor.RecordFactory;
 
 /**
  * This Factory creates new instances of {@link FixedLengthString} with a specific length. Instances of
  *  this class are used by {@link AccessorConfig#createNewRecord()} if the factory is registered
- *  with {@link com.github.tinosteinort.flda.accessor.AccessorConfigBuilder#withRecordFactory(Supplier)}.
+ *  with {@link com.github.tinosteinort.flda.accessor.AccessorConfigBuilder#withRecordFactory(RecordFactory)}.
  */
-public class FixedLengthStringFactory implements Supplier<FixedLengthString> {
+public class FixedLengthStringFactory implements RecordFactory<FixedLengthString> {
 
     private final int length;
     private final char initialFiller;
@@ -28,7 +27,7 @@ public class FixedLengthStringFactory implements Supplier<FixedLengthString> {
      *
      * @return a new instance of a {@link FixedLengthString}
      */
-    @Override public FixedLengthString get() {
+    @Override public FixedLengthString createNewRecord() {
         return new FixedLengthString(length, initialFiller);
     }
 }

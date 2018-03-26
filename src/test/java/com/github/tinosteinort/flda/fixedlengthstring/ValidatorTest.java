@@ -1,11 +1,8 @@
 package com.github.tinosteinort.flda.fixedlengthstring;
 
-import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
-import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
+import com.github.tinosteinort.flda.accessor.ReadAccessor;
+import com.github.tinosteinort.flda.accessor.WriteAccessor;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 public class ValidatorTest {
 
@@ -16,18 +13,6 @@ public class ValidatorTest {
                     .withReadValidator(readValidator)
                     .withWriteValidator(writeValidator)
                     .build();
-
-    @Test public void validateConfigRead() {
-        assertEquals(readValidator, config.readValidator());
-    }
-
-    @Test public void validateConfigWrite() {
-        assertEquals(writeValidator, config.writeValidator());
-    }
-
-    @Test public void validateDifferentReaders() {
-        assertNotEquals(config.readValidator(), config.writeValidator());
-    }
 
     @Test(expected = IllegalArgumentException.class)
     public void validateRead() {

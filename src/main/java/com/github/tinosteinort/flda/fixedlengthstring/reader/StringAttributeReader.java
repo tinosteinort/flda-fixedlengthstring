@@ -1,6 +1,6 @@
 package com.github.tinosteinort.flda.fixedlengthstring.reader;
 
-import com.github.tinosteinort.flda.accessor.reader.AttributeReader;
+import com.github.tinosteinort.flda.accessor.AttributeReader;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthString;
 import com.github.tinosteinort.flda.fixedlengthstring.FixedLengthStringAttribute;
 import com.github.tinosteinort.flda.fixedlengthstring.StringUtils;

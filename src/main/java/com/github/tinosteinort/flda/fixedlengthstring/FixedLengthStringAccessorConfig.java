@@ -1,27 +1,29 @@
 package com.github.tinosteinort.flda.fixedlengthstring;
 
 import com.github.tinosteinort.flda.accessor.AccessorConfig;
-import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
-import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
+import com.github.tinosteinort.flda.accessor.Attribute;
+import com.github.tinosteinort.flda.accessor.AttributeReader;
+import com.github.tinosteinort.flda.accessor.AttributeWriter;
+import com.github.tinosteinort.flda.accessor.RecordFactory;
+import com.github.tinosteinort.flda.accessor.RecordValidator;
+
+import java.util.Map;
 
 /**
  * Accessor configuration class of FLDA for records of type {@link FixedLengthString}.
  */
-public interface FixedLengthStringAccessorConfig extends AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> {
+public abstract class FixedLengthStringAccessorConfig extends AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> {
 
-    /**
-     * Creates a new {@link ReadAccessor} for the given record.
-     *
-     * @param record to read from
-     * @return a new {@code ReadAccessor} for the record.
-     */
-    ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> newReadAccessor(final FixedLengthString record);
+    FixedLengthStringAccessorConfig(
+            final Map<Class<?>, AttributeReader<FixedLengthString, ?, ? extends Attribute<?>>> readersByType,
+            final Map<Class<?>, AttributeWriter<FixedLengthString, ?, ? extends Attribute<?>>> writersByType,
+            final Map<FixedLengthStringAttribute<?>, AttributeReader<FixedLengthString, ?, ? extends Attribute<?>>> readersByAttribute,
+            final Map<FixedLengthStringAttribute<?>, AttributeWriter<FixedLengthString, ?, ? extends Attribute<?>>> writersByAttribute,
+            final RecordFactory<FixedLengthString> recordFactory,
+            final RecordValidator<FixedLengthString> readValidator,
+            final RecordValidator<FixedLengthString> writeValidator) {
 
-    /**
-     * Creates a new {@link WriteAccessor} for the given record.
-     *
-     * @param record to write to
-     * @return a new {@code WriteAccessor} for the record.
-     */
-    WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> newWriteAccessor(final FixedLengthString record);
+        super(readersByType, writersByType, readersByAttribute, writersByAttribute, recordFactory, readValidator,
+                writeValidator);
+    }
 }

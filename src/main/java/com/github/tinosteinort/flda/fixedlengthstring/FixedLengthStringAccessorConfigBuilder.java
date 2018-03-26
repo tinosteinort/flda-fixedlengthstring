@@ -3,11 +3,10 @@ package com.github.tinosteinort.flda.fixedlengthstring;
 import com.github.tinosteinort.flda.accessor.AccessorConfig;
 import com.github.tinosteinort.flda.accessor.AccessorConfigBuilder;
 import com.github.tinosteinort.flda.accessor.Attribute;
+import com.github.tinosteinort.flda.accessor.AttributeReader;
+import com.github.tinosteinort.flda.accessor.AttributeWriter;
+import com.github.tinosteinort.flda.accessor.RecordFactory;
 import com.github.tinosteinort.flda.accessor.RecordValidator;
-import com.github.tinosteinort.flda.accessor.reader.AttributeReader;
-import com.github.tinosteinort.flda.accessor.reader.ReadAccessor;
-import com.github.tinosteinort.flda.accessor.writer.AttributeWriter;
-import com.github.tinosteinort.flda.accessor.writer.WriteAccessor;
 import com.github.tinosteinort.flda.fixedlengthstring.reader.BigDecimalAttributeReader;
 import com.github.tinosteinort.flda.fixedlengthstring.reader.BigIntegerAttributeReader;
 import com.github.tinosteinort.flda.fixedlengthstring.reader.ByteAttributeReader;
@@ -29,8 +28,6 @@ import com.github.tinosteinort.flda.fixedlengthstring.writer.StringAttributeWrit
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Map;
-import java.util.function.Supplier;
 
 /**
  * AccessorConfigBuilder for {@link FixedLengthStringAttribute}.
@@ -38,8 +35,8 @@ import java.util.function.Supplier;
  *  To read and write Enums, custom reader/writer with the specific type has to be registered:
  *  <pre>
  *      ...
- *      .registerReader(EnumType.class, new EnumAttributeReader<>(EnumType.class))
- *      .registerWriter(EnumType.class, new EnumAttributeWriter<>())
+ *      .registerReader(EnumType.class, new EnumAttributeReader&lt;&gt;(EnumType.class))
+ *      .registerWriter(EnumType.class, new EnumAttributeWriter&lt;&gt;())
  *      ...
  *  </pre>
  *
@@ -140,7 +137,7 @@ public class FixedLengthStringAccessorConfigBuilder
     }
 
     @Override public FixedLengthStringAccessorConfigBuilder withRecordFactory(
-            final Supplier<FixedLengthString> recordFactory) {
+            final RecordFactory<FixedLengthString> recordFactory) {
         return (FixedLengthStringAccessorConfigBuilder) super.withRecordFactory(recordFactory);
     }
 
@@ -155,64 +152,8 @@ public class FixedLengthStringAccessorConfigBuilder
     }
 
     @Override public FixedLengthStringAccessorConfig build() {
-
-        final AccessorConfig<FixedLengthString, FixedLengthStringAttribute<?>> innerConfig = super.build();
-
-        return new FixedLengthStringAccessorConfig() {
-
-            @Override
-            public <ATTR_TYPE> AttributeReader<FixedLengthString, ATTR_TYPE, FixedLengthStringAttribute<?>> readerFor(
-                    final FixedLengthStringAttribute<?> attribute) {
-                return innerConfig.readerFor(attribute);
-            }
-
-            @Override
-            public <ATTR_TYPE> AttributeWriter<FixedLengthString, ATTR_TYPE, FixedLengthStringAttribute<?>> writerFor(
-                    final FixedLengthStringAttribute<?> attribute) {
-                return innerConfig.writerFor(attribute);
-            }
-
-            @Override public FixedLengthString createNewRecord() {
-                return innerConfig.createNewRecord();
-            }
-
-            @Override public void validateForRead(final FixedLengthString record) {
-                innerConfig.validateForRead(record);
-            }
-
-            @Override public void validateForWrite(final FixedLengthString record) {
-                innerConfig.validateForWrite(record);
-            }
-
-            @Override public Map<Class<?>, AttributeReader<FixedLengthString, ?, ? extends Attribute<?>>> readers() {
-                return innerConfig.readers();
-            }
-
-            @Override public Map<Class<?>, AttributeWriter<FixedLengthString, ?, ? extends Attribute<?>>> writers() {
-                return innerConfig.writers();
-            }
-
-            @Override public Supplier<FixedLengthString> recordFactory() {
-                return innerConfig.recordFactory();
-            }
-
-            @Override public RecordValidator<FixedLengthString> readValidator() {
-                return innerConfig.readValidator();
-            }
-
-            @Override public RecordValidator<FixedLengthString> writeValidator() {
-                return innerConfig.writeValidator();
-            }
-
-            @Override public ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> newReadAccessor(
-                    final FixedLengthString record) {
-                return new ReadAccessor<>(this, record);
-            }
-
-            @Override public WriteAccessor<FixedLengthString, FixedLengthStringAttribute<?>> newWriteAccessor(
-                    final FixedLengthString record) {
-                return new WriteAccessor<>(this, record);
-            }
+        return new FixedLengthStringAccessorConfig(readersByType, writersByType, readersByAttribute, writersByAttribute,
+                recordFactory, readValidator, writeValidator) {
         };
     }
 }
