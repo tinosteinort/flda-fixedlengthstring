@@ -6,7 +6,7 @@
 
     <groupId>com.github.tinosteinort</groupId>
     <artifactId>flda-fixedlengthstring</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}-${project.version}</name>
@@ -56,7 +56,7 @@
         <version.maven-gpg-plugin>1.5</version.maven-gpg-plugin>
         <version.maven-jar-plugin>3.0.2</version.maven-jar-plugin>
         <version.junit>4.12</version.junit>
-        <version.flda-core>2.0.0-SNAPSHOT</version.flda-core>
+        <version.flda-core>2.0.0</version.flda-core>
     </properties>
 
     <dependencies>
