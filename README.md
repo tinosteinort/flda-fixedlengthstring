@@ -38,3 +38,27 @@ See [FixedLengthStringInterfaceTest](src/test/java/com/github/tinosteinort/flda/
   * BigInteger
   * BigDecimal
 * extending a config and overwrite behavior for an attribute
+
+## Maven
+
+To use `flda-stringlist`, include the following artifacts:
+
+```xml
+<dependency>
+    <groupId>com.github.tinosteinort</groupId>
+    <artifactId>flda-core</artifactId>
+    <version>2.0.0</version>
+</dependency>
+<dependency>
+    <groupId>com.github.tinosteinort</groupId>
+    <artifactId>flda-fixedlengthstring</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+## Java 9 Module
+
+The Automatic Module Name of this library is:
+```
+com.github.tinosteinort.flda.fixedlengthstring
+```
