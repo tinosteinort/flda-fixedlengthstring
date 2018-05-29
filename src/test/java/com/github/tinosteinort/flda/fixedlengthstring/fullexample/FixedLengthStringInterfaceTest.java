@@ -33,10 +33,10 @@ public class FixedLengthStringInterfaceTest {
 
     @Test public void testReadExample() {
 
-        final String record = "Dagobert..Duck......#100";
+        final FixedLengthString record = new FixedLengthString("Dagobert..Duck......#100");
 
         final ReadAccessor<FixedLengthString, FixedLengthStringAttribute<?>> readAccessor =
-                config.newReadAccessor(new FixedLengthString(record));
+                config.newReadAccessor(record);
 
         final Person person = new Person();
         person.setFirstname(readAccessor.read(FIRST_NAME));
